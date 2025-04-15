@@ -1,9 +1,11 @@
 #ifndef STDLIB_H
 #define STDLIB_H
 
+#ifdef __cplusplus
 #include <string>
 #include <cstdarg>
 #include <cstring>
+#endif
 #include "build.h"
 #include "xash3d_types.h"
 
@@ -150,12 +152,18 @@ const char* Q_strchrnul(const char* s, int c);
 #endif
 
 size_t Q_strncpy(char* dst, const char* src, size_t siz);
+#ifdef __cplusplus
 size_t Q_strncpy(std::string& dst, const char* src, size_t siz);
+#endif
 
 void COM_FixSlashes(char* pname);
+#ifdef __cplusplus
 void COM_FixSlashes(std::string& str);
+#endif
 
 size_t Q_strlen(const char* str);
+#ifdef __cplusplus
 size_t Q_strlen(const std::string& str);
+#endif
 
 #endif//STDLIB_H

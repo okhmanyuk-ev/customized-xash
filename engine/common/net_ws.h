@@ -16,13 +16,10 @@ GNU General Public License for more details.
 #ifndef NET_WS_H
 #define NET_WS_H
 
-namespace sky
+struct SkyWebsocketDisconnected
 {
-	struct WebsocketDisconnected
-	{
-		int index;
-	};
-}
+	int index;
+};
 
 typedef enum
 {
@@ -57,14 +54,12 @@ typedef enum
 
 
 #include "netadr.h"
-#include <optional>
-#include <string>
 
 extern convar_t	net_showpackets;
 extern convar_t	net_clockwindow;
 
 #ifdef XASH_WEBSOCKET
-bool NET_IsClientWebsocketConnected();
+qboolean NET_IsClientWebsocketConnected(void);
 #endif
 
 void NET_Init( void );
@@ -72,7 +67,8 @@ void NET_Shutdown( void );
 void NET_Sleep( int msec );
 qboolean NET_IsActive( void );
 qboolean NET_IsConfigured( void );
-void NET_Config( qboolean net_enable, qboolean changeport, std::optional<std::string> server_addr = std::nullopt );
+void NET_Config(qboolean net_enable, qboolean changeport, char* server_addr);
+void NET_Config(qboolean net_enable, qboolean changeport);
 uint16_t NET_GetServerLocalPort();
 qboolean NET_IsLocalAddress( netadr_t adr );
 const char *NET_AdrToString( const netadr_t a );

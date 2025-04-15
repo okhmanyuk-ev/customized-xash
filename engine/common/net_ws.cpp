@@ -1750,7 +1750,7 @@ public:
 			assert(gServerChannels.contains(index));
 			gServerChannels.erase(index);
 
-			sky::Emit(sky::WebsocketDisconnected{ index });
+			sky::Emit(SkyWebsocketDisconnected{ index });
 		});
 	}
 
@@ -1795,7 +1795,7 @@ static std::optional<WebsocketClient> gWebsocketClient;
 static std::optional<WebsocketServer> gWebsocketServer;
 #endif
 
-bool NET_IsClientWebsocketConnected()
+qboolean NET_IsClientWebsocketConnected(void)
 {
 	if (!gWebsocketClient.has_value())
 		return false;
@@ -2219,7 +2219,7 @@ NET_Config
 A single player game will only use the loopback code
 ====================
 */
-void NET_Config( qboolean multiplayer, qboolean changeport, std::optional<std::string> server_addr)
+static void NET_Config( qboolean multiplayer, qboolean changeport, std::optional<std::string> server_addr)
 {
 	static qboolean	bFirst = true;
 	static qboolean	old_config;
@@ -2292,6 +2292,16 @@ void NET_Config( qboolean multiplayer, qboolean changeport, std::optional<std::s
 	NET_ClearLoopback ();
 
 	net.configured = multiplayer ? true : false;
+}
+
+void NET_Config(qboolean net_enable, qboolean changeport, char* server_addr)
+{
+	NET_Config(net_enable, changeport, std::string(server_addr));
+}
+
+void NET_Config(qboolean net_enable, qboolean changeport)
+{
+	NET_Config(net_enable, changeport, std::nullopt);
 }
 
 uint16_t NET_GetServerLocalPort()

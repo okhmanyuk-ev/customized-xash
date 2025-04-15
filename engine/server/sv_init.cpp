@@ -807,7 +807,7 @@ void SV_SetupClients( void )
 	svgame.numEntities = svs.maxclients + 1; // clients + world
 	ClearBits( sv_maxclients.flags, FCVAR_CHANGED );
 
-	static auto cls_state_changed_listener = sky::Listener<sky::WebsocketDisconnected>([&](const sky::WebsocketDisconnected& e) {
+	static auto cls_state_changed_listener = sky::Listener<SkyWebsocketDisconnected>([&](const SkyWebsocketDisconnected& e) {
 		int		i = 0;
 		sv_client_t* cl;
 
@@ -815,7 +815,7 @@ void SV_SetupClients( void )
 		{
 			if (cl->state < cs_connected)
 				continue;
-			
+
 			if (cl->netchan.remote_address.ip4 != e.index)
 				continue;
 

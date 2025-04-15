@@ -51,10 +51,12 @@ size_t Q_strlen(const char* str)
 	return strlen(str);
 }
 
+#ifdef __cplusplus
 size_t Q_strlen(const std::string& str)
 {
 	return str.size();
 }
+#endif
 
 size_t Q_colorstr( const char *string )
 {
@@ -172,11 +174,13 @@ size_t Q_strncpy( char *dst, const char *src, size_t size )
 	return ( s - src - 1 ); // count does not include NULL
 }
 
+#ifdef __cplusplus
 size_t Q_strncpy(std::string& dst, const char* src, size_t siz)
 {
 	dst.resize(siz, 0);
 	return Q_strncpy((char*)dst.data(), src, siz);
 }
+#endif
 
 int Q_atoi( const char *str )
 {
@@ -791,6 +795,7 @@ void COM_FixSlashes( char *pname )
 	}
 }
 
+#ifdef __cplusplus
 void COM_FixSlashes(std::string& str)
 {
 	for (auto& c : str)
@@ -799,6 +804,7 @@ void COM_FixSlashes(std::string& str)
 			c = '/';
 	}
 }
+#endif
 
 /*
 ============

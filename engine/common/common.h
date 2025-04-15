@@ -40,7 +40,9 @@ XASH SPECIFIC			- sort of hack that works only in Xash3D not in GoldSrc
 #include <stdio.h>
 #include <stdlib.h> // rand, adbs
 #include <stdarg.h> // va
+#ifdef __cplusplus
 #include <string>
+#endif
 
 #if !XASH_WIN32
 #include <stddef.h> // size_t
@@ -144,16 +146,25 @@ typedef enum
 #define FORCE_DRAW_VERSION_TIME 5.0 // draw version for 5 seconds
 
 #ifdef _DEBUG
-namespace engine { void DBG_AssertFunction(qboolean fExpr, const char* szExpr, const char* szFile, int szLine, const char* szMessage); }
+#ifdef __cplusplus
+namespace engine { 
+#endif
+void DBG_AssertFunction(qboolean fExpr, const char* szExpr, const char* szFile, int szLine, const char* szMessage);
+#ifdef __cplusplus
+}
+#endif
 #define Assert( f )		engine::DBG_AssertFunction( f, #f, __FILE__, __LINE__, NULL )
 #else
 #define Assert( f )
 #endif
 
-namespace engine
-{
+#ifdef __cplusplus
+namespace engine {
+#endif
 extern convar_t	gl_vsync;
+#ifdef __cplusplus
 }
+#endif
 extern convar_t	scr_loading;
 extern convar_t	scr_download;
 extern convar_t	cmd_scripting;
